@@ -139,47 +139,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Fleeing No Button Logic ---
   function fleeNoButton() {
-    noClickCount++;
-    
-    // Choose sad phrase
-    const phraseIndex = Math.min(noClickCount - 1, sadPhrases.length - 1);
-    proposalTitle.innerText = sadPhrases[phraseIndex];
-    proposalSubtitle.innerText = "Ấn 'Đồng ý nè' đi chơi nha...";
-    
-    // Change cat to sad face
-    changeCatToSad();
+    try {
+      noClickCount++;
+      
+      // Choose sad phrase
+      const phraseIndex = Math.min(noClickCount - 1, sadPhrases.length - 1);
+      if (proposalTitle) proposalTitle.innerText = sadPhrases[phraseIndex];
+      if (proposalSubtitle) proposalSubtitle.innerText = "Ấn 'Đồng ý nè' đi chơi nha...";
+      
+      // Change cat to sad face
+      changeCatToSad();
 
-    // Scale up YES button
-    yesScale += 0.22;
-    btnYes.style.transform = `scale(${yesScale})`;
-    
-    // If she clicked NO too many times, make it disappear
-    if (noClickCount >= 7) {
-      btnNo.style.display = 'none';
-      proposalTitle.innerText = "Hết nút bận rồi nha! 😜";
-      return;
+      // Scale up YES button
+      yesScale += 0.22;
+      if (btnYes) btnYes.style.transform = `scale(${yesScale})`;
+      
+      // If she clicked NO too many times, make it disappear
+      if (noClickCount >= 7) {
+        if (btnNo) btnNo.style.display = 'none';
+        if (proposalTitle) proposalTitle.innerText = "Hết nút bận rồi nha! 😜";
+        return;
+      }
+
+      // Get parent bounds to keep button within the card container
+      const container = document.querySelector('.app-container');
+      if (container && btnNo) {
+        const containerRect = container.getBoundingClientRect();
+        const btnRect = btnNo.getBoundingClientRect();
+
+        // Calculate maximum top/left offsets relative to the container
+        const margin = 20;
+        const maxLeft = containerRect.width - btnRect.width - (margin * 2);
+        const maxTop = containerRect.height - btnRect.height - (margin * 2);
+
+        // Pick random position
+        const randomLeft = margin + Math.floor(Math.random() * maxLeft);
+        const randomTop = margin + Math.floor(Math.random() * maxTop);
+
+        // Apply absolute positions
+        btnNo.style.position = 'absolute';
+        btnNo.style.left = `${randomLeft}px`;
+        btnNo.style.top = `${randomTop}px`;
+        btnNo.style.zIndex = '10';
+      }
+    } catch (err) {
+      console.error('fleeNoButton error:', err);
     }
-
-    // Get parent bounds to keep button within the card container
-    const container = document.querySelector('.app-container');
-    const containerRect = container.getBoundingClientRect();
-    const btnRect = btnNo.getBoundingClientRect();
-
-    // Calculate maximum top/left offsets relative to the container
-    // We keep a margin to prevent it from going outside the container borders
-    const margin = 20;
-    const maxLeft = containerRect.width - btnRect.width - (margin * 2);
-    const maxTop = containerRect.height - btnRect.height - (margin * 2);
-
-    // Pick random position
-    const randomLeft = margin + Math.floor(Math.random() * maxLeft);
-    const randomTop = margin + Math.floor(Math.random() * maxTop);
-
-    // Apply absolute positions
-    btnNo.style.position = 'absolute';
-    btnNo.style.left = `${randomLeft}px`;
-    btnNo.style.top = `${randomTop}px`;
-    btnNo.style.zIndex = '10';
   }
 
   if (btnNo) {
@@ -193,14 +198,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- YES Button Trigger ---
   if (btnYes) {
     btnYes.addEventListener('click', () => {
-      // Fire beautiful confetti
-      fireConfetti();
+      try {
+        // Fire beautiful confetti
+        fireConfetti();
+      } catch (err) {
+        console.warn('Confetti failed, skipping:', err);
+      }
 
-      // Fade screens
-      if (introScreen) introScreen.classList.remove('active');
-      setTimeout(() => {
-        if (plannerScreen) plannerScreen.classList.add('active');
-      }, 300);
+      try {
+        // Fade screens
+        if (introScreen) introScreen.classList.remove('active');
+        setTimeout(() => {
+          if (plannerScreen) plannerScreen.classList.add('active');
+        }, 300);
+      } catch (err) {
+        console.error('Screen transition failed:', err);
+      }
     });
   }
 
