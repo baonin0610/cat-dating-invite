@@ -283,30 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 300);
   });
 
-  // --- Share confirmation / Zalo format ---
-  btnSendMessage.addEventListener('click', () => {
-    const date = summaryDate.innerText;
-    const time = document.getElementById('summary-time').innerText;
-    const activity = summaryActivity.innerText;
-    const treat = summaryTreat.innerText;
-    const note = summaryNote.innerText;
 
-    const message = `Em đồng ý đi chơi rồi nhé! 🐱\nLịch trình:\n📅 Ngày: ${date}\n⏰ Giờ đón: ${time}\n📍 Địa điểm: ${activity}\n😋 Ăn uống: ${treat}\n💌 Lời nhắn: ${note}\nHẹn gặp anh nha!`;
-
-    // Copy to clipboard
-    navigator.clipboard.writeText(message).then(() => {
-      alert("Đã sao chép lịch trình dễ thương! Bạn có thể dán vào Zalo/Messenger để gửi cho anh ấy ngay nhé! 🥰💌");
-      
-      // Attempt Zalo/Messenger redirection
-      // Open a generic share url or Zalo chat url if possible, otherwise let clipboard handle it.
-      // Zalo protocol isn't standard, open WhatsApp or general sharing layout as a fallback.
-      const encodedMsg = encodeURIComponent(message);
-      window.open(`https://api.whatsapp.com/send?text=${encodedMsg}`, '_blank');
-    }).catch(err => {
-      // Fallback
-      alert("Lịch trình cuộc hẹn:\n" + message);
-    });
-  });
 
   // --- Restart Date Selector ---
   btnRestart.addEventListener('click', () => {
