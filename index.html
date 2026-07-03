@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hẹn hò đi chơi cùng anh nha? 🐱💖</title>
+  <!-- Google Fonts for Playful/Cute Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@400..700&display=swap" rel="stylesheet">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Dynamic QR Code Generator Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <!-- Confetti effects -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Background Animated elements (hearts and paws) -->
+  <div class="floating-container" id="floating-container"></div>
+
+  <!-- Header tools for Sender (hidden on mobile, small gear icon top-right) -->
+  <header class="no-print">
+    <button class="settings-btn" id="settings-btn" title="Tạo Thẻ Quà Tặng / In Mã QR">
+      <svg class="icon-gear" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.34 14.86,5.08L14.47,2.42C14.43,2.18 14.22,2 13.97,2H9.97C9.72,2 9.51,2.18 9.47,2.42L9.08,5.08C8.47,5.34 7.9,5.66 7.38,6.05L4.89,5.05C4.67,4.96 4.4,5.05 4.27,5.27L2.27,8.73C2.15,8.95 2.2,9.22 2.39,9.37L4.5,11C4.46,11.34 4.43,11.67 4.43,12C4.43,12.33 4.46,12.65 4.5,12.97L2.39,14.63C2.2,14.78 2.15,15.05 2.27,15.27L4.27,18.73C4.4,18.95 4.67,19.04 4.89,18.95L7.38,17.95C7.9,18.34 8.47,18.66 9.08,18.92L9.47,21.58C9.51,21.82 9.72,22 9.97,22H13.97C14.22,22 14.43,21.82 14.47,21.58L14.86,18.92C15.47,18.66 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+      </svg>
+      <span>Tạo thiệp in QR</span>
+    </button>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container no-print">
+
+    <!-- SCREEN 1: The Dating Proposal -->
+    <section class="screen active" id="intro-screen">
+      <!-- Cute Cat sleeping or waiting -->
+      <div class="cat-illustration-box">
+        <!-- SVG Sleepy Cat / Waiting Cat -->
+        <svg class="cat-svg" id="intro-cat" viewBox="0 0 200 200">
+          <defs>
+            <linearGradient id="blush-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff9a9e" />
+              <stop offset="100%" stop-color="#fecfef" />
+            </linearGradient>
+          </defs>
+          
+          <!-- Shadow -->
+          <ellipse cx="100" cy="175" rx="60" ry="8" fill="#edd6d1" opacity="0.6" />
+          
+          <!-- Tail -->
+          <path class="cat-tail" d="M 135 155 Q 160 160 165 140 T 155 110" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" />
+
+          <!-- Body -->
+          <ellipse class="cat-body" cx="100" cy="142" rx="42" ry="32" fill="#ffffff" stroke="#1a1a1a" stroke-width="5" />
+          
+          <!-- Paws (Sitting front paws) -->
+          <path d="M 85 168 Q 85 174 90 174 Q 95 174 95 168" fill="none" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" />
+          <path d="M 105 168 Q 105 174 110 174 Q 115 174 115 168" fill="none" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" />
+
+          <!-- Head -->
+          <ellipse class="cat-head" cx="100" cy="90" rx="58" ry="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="5" />
+          
+          <!-- Ears -->
+          <path class="cat-ear ear-left" d="M 52 60 Q 42 32 60 38 L 74 54" fill="#ffffff" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          <path class="cat-ear ear-right" d="M 148 60 Q 158 32 140 38 L 126 54" fill="#ffffff" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          
+          <!-- Inner Ears (pink) -->
+          <path d="M 54 55 Q 48 40 58 43 L 68 53 Z" fill="#ffccd5" />
+          <path d="M 146 55 Q 152 40 142 43 L 132 53 Z" fill="#ffccd5" />
+
+          <!-- Eyes Group (Big cute eyes like the drawing) -->
+          <g class="cat-eyes-group">
+            <!-- Left Eye -->
+            <g class="cat-eye-left">
+              <circle cx="74" cy="92" r="13" fill="#1a1a1a" />
+              <!-- Reflection Highlights -->
+              <circle cx="70" cy="87" r="4.5" fill="#ffffff" />
+              <circle cx="79" cy="98" r="2" fill="#ffffff" />
+            </g>
+            <!-- Right Eye -->
+            <g class="cat-eye-right">
+              <circle cx="126" cy="92" r="13" fill="#1a1a1a" />
+              <!-- Reflection Highlights -->
+              <circle cx="122" cy="87" r="4.5" fill="#ffffff" />
+              <circle cx="131" cy="98" r="2" fill="#ffffff" />
+            </g>
+          </g>
+
+          <!-- Eyebrows -->
+          <path d="M 68 76 Q 74 72 80 76" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" />
+          <path d="M 120 76 Q 126 72 132 76" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" />
+
+          <!-- Whiskers -->
+          <g class="cat-whiskers">
+            <line x1="44" y1="92" x2="28" y2="92" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="43" y1="98" x2="26" y2="102" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="45" y1="104" x2="30" y2="111" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+
+            <line x1="156" y1="92" x2="172" y2="92" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="157" y1="98" x2="174" y2="102" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="155" y1="104" x2="170" y2="111" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+          </g>
+
+          <!-- Blush -->
+          <ellipse cx="54" cy="106" rx="7" ry="4" fill="url(#blush-grad)" opacity="0.8" />
+          <ellipse cx="146" cy="106" rx="7" ry="4" fill="url(#blush-grad)" opacity="0.8" />
+
+          <!-- Nose/Mouth (w shape) -->
+          <path class="cat-mouth" d="M 94 99 Q 97 103 100 100 Q 103 103 106 99" fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+        </svg>
+      </div>
+
+      <div class="intro-text">
+        <h1 class="proposal-title">Đi chơi với anh nha? 🐱</h1>
+        <p class="proposal-subtitle">Cuối tuần này em rảnh không?</p>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="proposal-actions">
+        <button class="btn btn-yes" id="btn-yes">
+          Đồng ý nè 😊
+        </button>
+        <button class="btn btn-no" id="btn-no">
+          Bận rồi 😜
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: Date & Activity Selection -->
+    <section class="screen" id="planner-screen">
+      <div class="cat-illustration-box">
+        <!-- SVG Joyful jumping/dancing cat -->
+        <svg class="cat-svg animated-happy" viewBox="0 0 200 200">
+          <ellipse cx="100" cy="175" rx="60" ry="8" fill="#edd6d1" opacity="0.6" />
+          
+          <!-- Tail -->
+          <path class="cat-tail-happy" d="M 135 155 Q 160 160 165 140 T 155 110" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" />
+          
+          <g class="cat-body-happy">
+            <!-- Body -->
+            <ellipse cx="100" cy="142" rx="42" ry="32" fill="#ffffff" stroke="#1a1a1a" stroke-width="5" />
+            
+            <!-- Paws -->
+            <path d="M 85 168 Q 85 174 90 174 Q 95 174 95 168" fill="none" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" />
+            <path d="M 105 168 Q 105 174 110 174 Q 115 174 115 168" fill="none" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round" />
+
+            <!-- Head -->
+            <ellipse cx="100" cy="90" rx="58" ry="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="5" />
+            
+            <!-- Ears -->
+            <path d="M 52 60 Q 42 32 60 38 L 74 54" fill="#ffffff" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M 148 60 Q 158 32 140 38 L 126 54" fill="#ffffff" stroke="#1a1a1a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+            
+            <!-- Inner Ears -->
+            <path d="M 54 55 Q 48 40 58 43 L 68 53 Z" fill="#ffccd5" />
+            <path d="M 146 55 Q 152 40 142 43 L 132 53 Z" fill="#ffccd5" />
+
+            <!-- Smiling Eyes (^^ shape) -->
+            <path d="M 64 92 Q 74 80 84 92" fill="none" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round" />
+            <path d="M 116 92 Q 126 80 136 92" fill="none" stroke="#1a1a1a" stroke-width="4.5" stroke-linecap="round" />
+
+            <!-- Eyebrows -->
+            <path d="M 68 76 Q 74 72 80 76" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" />
+            <path d="M 120 76 Q 126 72 132 76" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" />
+
+            <!-- Whiskers -->
+            <line x1="44" y1="92" x2="28" y2="92" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="43" y1="98" x2="26" y2="102" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="45" y1="104" x2="30" y2="111" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="156" y1="92" x2="172" y2="92" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="157" y1="98" x2="174" y2="102" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="155" y1="104" x2="170" y2="111" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+
+            <!-- Blush -->
+            <ellipse cx="54" cy="106" rx="7" ry="4" fill="url(#blush-grad)" opacity="0.8" />
+            <ellipse cx="146" cy="106" rx="7" ry="4" fill="url(#blush-grad)" opacity="0.8" />
+
+            <!-- Open happy mouth -->
+            <path d="M 94 99 Q 100 112 106 99 Z" fill="#ffccd5" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+            
+            <!-- Waving Left Paw -->
+            <ellipse cx="44" cy="135" rx="10" ry="7" fill="#ffffff" stroke="#1a1a1a" stroke-width="3.5" transform="rotate(-30 44 135)" />
+            <!-- Right Paw -->
+            <ellipse cx="156" cy="135" rx="10" ry="7" fill="#ffffff" stroke="#1a1a1a" stroke-width="3.5" transform="rotate(30 156 135)" />
+          </g>
+        </svg>
+      </div>
+
+      <h2 class="planner-title">Yay! Lên lịch nhé! 🐱</h2>
+      <p class="planner-subtitle">Chọn ngày với địa điểm nè:</p>
+
+      <form class="planner-form" id="date-form">
+        <!-- Date field -->
+        <div class="form-group">
+          <label for="date-input">📅 Ngày đi chơi:</label>
+          <input type="date" id="date-input" required class="input-date">
+        </div>
+
+        <!-- Activity selector -->
+        <div class="form-group">
+          <label>📍 Đi đâu chơi đây?</label>
+          <div class="card-selector" id="activity-selector">
+            <div class="selector-card active" data-value="Cà phê mèo ☕">
+              <span class="card-icon">🐱</span>
+              <span class="card-text">Cà phê mèo</span>
+            </div>
+            <div class="selector-card" data-value="Xem phim chiếu rạp 🎬">
+              <span class="card-icon">🍿</span>
+              <span class="card-text">Xem phim</span>
+            </div>
+            <div class="selector-card" data-value="Dã ngoại công viên 🧺">
+              <span class="card-icon">🧺</span>
+              <span class="card-text">Dã ngoại</span>
+            </div>
+            <div class="selector-card" data-value="Tô tượng / Làm gốm 🎨">
+              <span class="card-icon">🎨</span>
+              <span class="card-text">Tô tượng</span>
+            </div>
+            <div class="selector-card" data-value="Lượn lờ phố xá 🏍️">
+              <span class="card-icon">🛵</span>
+              <span class="card-text">Lượn phố</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Treat selector -->
+        <div class="form-group">
+          <label>😋 Ăn uống gì đây?</label>
+          <div class="card-selector" id="treat-selector">
+            <div class="selector-card active" data-value="Trà sữa béo ngậy 🧋">
+              <span class="card-icon">🧋</span>
+              <span class="card-text">Trà sữa</span>
+            </div>
+            <div class="selector-card" data-value="Kem mát lạnh 🍦">
+              <span class="card-icon">🍦</span>
+              <span class="card-text">Ăn kem</span>
+            </div>
+            <div class="selector-card" data-value="Ăn thịt nướng/lẩu 🍲">
+              <span class="card-icon">🍲</span>
+              <span class="card-text">Lẩu/Nướng</span>
+            </div>
+            <div class="selector-card" data-value="Bánh ngọt xinh xắn 🍰">
+              <span class="card-icon">🍰</span>
+              <span class="card-text">Bánh ngọt</span>
+            </div>
+            <div class="selector-card" data-value="Sushi sang chảnh 🍣">
+              <span class="card-icon">🍣</span>
+              <span class="card-text">Sushi</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message field -->
+        <div class="form-group">
+          <label for="note-input">💌 Lời nhắn cho anh:</label>
+          <textarea id="note-input" placeholder="Ví dụ: Qua đón em đúng giờ nha..." rows="3" class="input-textarea"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-confirm" id="btn-submit-date">
+          Xác nhận luôn! 🐱
+        </button>
+      </form>
+    </section>
+
+    <!-- SCREEN 3: Success and Summary -->
+    <section class="screen" id="success-screen">
+      <div class="cat-illustration-box">
+        <!-- SVG Hugging Cats -->
+        <svg class="cat-svg cat-cuddle" viewBox="0 0 200 200">
+          <ellipse cx="100" cy="175" rx="75" ry="8" fill="#edd6d1" opacity="0.6" />
+          
+          <!-- Hearts floating -->
+          <g class="floating-hearts-svg">
+            <path class="heart-svg-1" d="M 80 50 A 8 8 0 0 1 96 50 Q 96 64 80 76 Q 64 64 64 50 A 8 8 0 0 1 80 50 Z" fill="#ff4d6d" />
+            <path class="heart-svg-2" d="M 120 40 A 6 6 0 0 1 132 40 Q 132 50 120 60 Q 108 50 108 40 A 6 6 0 0 1 120 40 Z" fill="#ff758f" />
+          </g>
+
+          <g class="cats-hugging">
+            <!-- Cat Left (White) -->
+            <g class="cat-hugging-left" transform="translate(10, 15)">
+              <ellipse cx="70" cy="142" rx="36" ry="28" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+              <!-- Paws -->
+              <path d="M 60 165 Q 60 170 65 170 Q 70 170 70 165" fill="none" stroke="#1a1a1a" stroke-width="3" />
+              <path d="M 75 165 Q 75 170 80 170 Q 85 170 85 165" fill="none" stroke="#1a1a1a" stroke-width="3" />
+
+              <ellipse cx="70" cy="95" rx="48" ry="38" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+              <!-- Ears -->
+              <path d="M 30 70 Q 20 45 38 50 L 50 65" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+              <path d="M 110 70 Q 120 45 102 50 L 90 65" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+              
+              <!-- Happy Closed Eyes looking right -->
+              <path d="M 48 95 Q 56 86 64 95" fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+              <path d="M 82 95 Q 90 86 98 95" fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+
+              <!-- Nose/Mouth -->
+              <path d="M 70 99 Q 72 102 74 100 Q 76 102 78 99" fill="none" stroke="#1a1a1a" stroke-width="3" />
+              <!-- Blush -->
+              <ellipse cx="40" cy="106" rx="6" ry="3" fill="#ffb4b9" opacity="0.8" />
+              <ellipse cx="96" cy="106" rx="6" ry="3" fill="#ffb4b9" opacity="0.8" />
+            </g>
+
+            <!-- Cat Right (Gray) -->
+            <g class="cat-hugging-right" transform="translate(50, 15)">
+              <ellipse cx="70" cy="142" rx="36" ry="28" fill="#e2e6eb" stroke="#1a1a1a" stroke-width="4.5" />
+              <!-- Paws -->
+              <path d="M 60 165 Q 60 170 65 170 Q 70 170 70 165" fill="none" stroke="#1a1a1a" stroke-width="3" />
+              <path d="M 75 165 Q 75 170 80 170 Q 85 170 85 165" fill="none" stroke="#1a1a1a" stroke-width="3" />
+
+              <ellipse cx="70" cy="95" rx="48" ry="38" fill="#e2e6eb" stroke="#1a1a1a" stroke-width="4.5" />
+              <!-- Ears -->
+              <path d="M 30 70 Q 20 45 38 50 L 50 65" fill="#e2e6eb" stroke="#1a1a1a" stroke-width="4.5" />
+              <path d="M 110 70 Q 120 45 102 50 L 90 65" fill="#e2e6eb" stroke="#1a1a1a" stroke-width="4.5" />
+              
+              <!-- Happy Closed Eyes looking left -->
+              <path d="M 42 95 Q 50 86 58 95" fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+              <path d="M 76 95 Q 84 86 92 95" fill="none" stroke="#1a1a1a" stroke-width="3.5" stroke-linecap="round" />
+
+              <!-- Nose/Mouth -->
+              <path d="M 64 99 Q 66 102 68 100 Q 70 102 72 99" fill="none" stroke="#1a1a1a" stroke-width="3" />
+              <!-- Blush -->
+              <ellipse cx="34" cy="106" rx="6" ry="3" fill="#ffb4b9" opacity="0.8" />
+              <ellipse cx="90" cy="106" rx="6" ry="3" fill="#ffb4b9" opacity="0.8" />
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <h2 class="success-title">Hẹn gặp em nhé! 🎉</h2>
+      <p class="success-subtitle">Đây là thông tin lịch hẹn của chúng mình:</p>
+
+      <div class="summary-card">
+        <div class="summary-item">
+          <span class="summary-label">📅 Ngày hẹn:</span>
+          <span class="summary-val" id="summary-date">Chưa chọn</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">📍 Hoạt động:</span>
+          <span class="summary-val" id="summary-activity">Chưa chọn</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">😋 Ăn uống:</span>
+          <span class="summary-val" id="summary-treat">Chưa chọn</span>
+        </div>
+        <div class="summary-item note-summary">
+          <span class="summary-label">💌 Lời nhắn:</span>
+          <p class="summary-val italic" id="summary-note">Không có lời nhắn nào.</p>
+        </div>
+      </div>
+
+      <!-- Send Confirmation and Social handles -->
+      <div class="success-actions">
+        <button class="btn btn-send" id="btn-send-message">
+          Gửi lịch cho anh 💬
+        </button>
+        <button class="btn btn-secondary" id="btn-restart">
+          Chọn lại 🔄
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- PRINTABLE CARD / SENDER MODAL VIEW (Shows QR Code to print) -->
+  <div class="print-overlay no-print" id="print-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Tạo Thiệp Hẹn Hò & In Mã QR</h3>
+        <button class="modal-close" id="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="instruction-text">
+          Hãy điền link sau khi bạn đã deploy lên <strong>GitHub Pages</strong> để tạo mã QR. Bạn có thể in thiệp này ra giấy để gửi tặng bạn gái nhé!
+        </p>
+        
+        <div class="form-group url-config">
+          <label for="url-input">🌐 Địa chỉ trang web của bạn:</label>
+          <div class="input-url-wrapper">
+            <input type="url" id="url-input" placeholder="https://username.github.io/repo-name" class="input-text">
+            <button class="btn btn-small" id="btn-use-current">Lấy URL hiện tại</button>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Card Preview Section -->
+        <div class="card-print-preview" id="printable-card-area">
+          <div class="preview-title-bar">Bản xem trước thiệp in (Khổ A4 gấp đôi hoặc cắt rời)</div>
+          
+          <div class="foldable-card">
+            <!-- Front Page -->
+            <div class="card-page page-front">
+              <div class="card-content-wrap">
+                <div class="card-cat-drawing">
+                  <svg class="preview-svg-cat" viewBox="0 0 200 200">
+                    <ellipse cx="100" cy="175" rx="55" ry="8" fill="#edd6d1" opacity="0.6" />
+                    <ellipse cx="100" cy="142" rx="42" ry="32" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+                    <!-- paws -->
+                    <path d="M 85 168 Q 85 174 90 174 Q 95 174 95 168" fill="none" stroke="#1a1a1a" stroke-width="3.5" />
+                    <path d="M 105 168 Q 105 174 110 174 Q 115 174 115 168" fill="none" stroke="#1a1a1a" stroke-width="3.5" />
+                    
+                    <!-- Head -->
+                    <ellipse cx="100" cy="90" rx="58" ry="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+                    <!-- Ears -->
+                    <path d="M 52 60 Q 42 32 60 38 L 74 54" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+                    <path d="M 148 60 Q 158 32 140 38 L 126 54" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+                    
+                    <!-- Inner Ears -->
+                    <path d="M 54 55 Q 48 40 58 43 L 68 53 Z" fill="#ffccd5" />
+                    <path d="M 146 55 Q 152 40 142 43 L 132 53 Z" fill="#ffccd5" />
+
+                    <!-- Eyes (Cute open shiny eyes) -->
+                    <circle cx="74" cy="92" r="12" fill="#1a1a1a" />
+                    <circle cx="70" cy="87" r="4.2" fill="#ffffff" />
+                    <circle cx="79" cy="97" r="1.8" fill="#ffffff" />
+                    
+                    <circle cx="126" cy="92" r="12" fill="#1a1a1a" />
+                    <circle cx="122" cy="87" r="4.2" fill="#ffffff" />
+                    <circle cx="131" cy="97" r="1.8" fill="#ffffff" />
+                    
+                    <!-- Eyebrows -->
+                    <path d="M 68 76 Q 74 72 80 76" fill="none" stroke="#1a1a1a" stroke-width="2.5" />
+                    <path d="M 120 76 Q 126 72 132 76" fill="none" stroke="#1a1a1a" stroke-width="2.5" />
+                    
+                    <!-- Mouth -->
+                    <path class="cat-mouth" d="M 94 99 Q 97 103 100 100 Q 103 103 106 99" fill="none" stroke="#1a1a1a" stroke-width="3" />
+                    <ellipse cx="54" cy="106" rx="7" ry="4" fill="url(#blush-grad)" opacity="0.8" />
+                    <ellipse cx="130" cy="106" rx="7" ry="4" fill="url(#blush-grad)" opacity="0.8" />
+
+                    <!-- Whiskers -->
+                    <line x1="44" y1="92" x2="28" y2="92" stroke="#1a1a1a" stroke-width="3" />
+                    <line x1="43" y1="98" x2="26" y2="102" stroke="#1a1a1a" stroke-width="3" />
+                    <line x1="156" y1="92" x2="172" y2="92" stroke="#1a1a1a" stroke-width="3" />
+                    <line x1="157" y1="98" x2="174" y2="102" stroke="#1a1a1a" stroke-width="3" />
+
+                    <!-- Letter Envelope -->
+                    <rect x="75" y="122" width="50" height="34" rx="3" fill="#ffffff" stroke="#1a1a1a" stroke-width="3" />
+                    <path d="M 75 122 L 100 139 L 125 122" fill="none" stroke="#1a1a1a" stroke-width="3" />
+                    <!-- Heart seal -->
+                    <path d="M 100 134 A 3 3 0 0 1 106 134 Q 106 140 100 144 Q 94 140 94 134 A 3 3 0 0 1 100 134 Z" fill="#ff4d6d" />
+                  </svg>
+                </div>
+                <h4 class="card-heading font-cute">Một lời mời gửi đến bạn... 💌</h4>
+                <p class="card-caption">Quét mã để xem chi tiết nhé!</p>
+              </div>
+            </div>
+
+            <!-- Inside Left Page (QR code) -->
+            <div class="card-page page-back">
+              <div class="card-content-wrap">
+                <h5 class="card-subheading">Quét mã QR để xem nhé! 📱</h5>
+                <div class="qr-container">
+                  <canvas id="qr-canvas"></canvas>
+                </div>
+                <p class="qr-description">Hẹn hò đi chơi 🐱</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-confirm print-action-btn" id="btn-print-card">
+            🖨️ In Thiệp Ngay (Phím tắt: Ctrl + P)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINT-ONLY CONTAINER (This layout only shows when printing standard A4 or card sizes) -->
+  <div class="print-layout only-print">
+    <div class="printable-greeting-card">
+      <div class="dashed-border-guide">Dòng kẻ gấp đôi / cắt rời</div>
+      <div class="print-pages-grid">
+        
+        <!-- Inside QR page -->
+        <div class="print-page print-page-qr">
+          <div class="print-content">
+            <h2 class="print-title">Quét mã để xem chi tiết... 💌</h2>
+            <div class="print-qr-wrapper">
+              <!-- A backup image or canvas node for print CSS -->
+              <canvas id="print-qr-canvas"></canvas>
+            </div>
+            <p class="print-instruction">Quét mã QR để xem nhé! 🐱</p>
+          </div>
+        </div>
+        
+        <!-- Front Cover Page -->
+        <div class="print-page print-page-front">
+          <div class="print-content">
+            <div class="print-cat-illustration">
+              <svg class="preview-svg-cat" viewBox="0 0 200 200" width="160" height="160">
+                <ellipse cx="100" cy="175" rx="55" ry="8" fill="#edd6d1" opacity="0.6" />
+                <ellipse cx="100" cy="142" rx="42" ry="32" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+                <!-- paws -->
+                <path d="M 85 168 Q 85 174 90 174 Q 95 174 95 168" fill="none" stroke="#1a1a1a" stroke-width="3.5" />
+                <path d="M 105 168 Q 105 174 110 174 Q 115 174 115 168" fill="none" stroke="#1a1a1a" stroke-width="3.5" />
+                
+                <!-- Head -->
+                <ellipse cx="100" cy="90" rx="58" ry="46" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+                <!-- Ears -->
+                <path d="M 52 60 Q 42 32 60 38 L 74 54" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+                <path d="M 148 60 Q 158 32 140 38 L 126 54" fill="#ffffff" stroke="#1a1a1a" stroke-width="4.5" />
+                
+                <!-- Inner Ears -->
+                <path d="M 54 55 Q 48 40 58 43 L 68 53 Z" fill="#ffccd5" />
+                <path d="M 146 55 Q 152 40 142 43 L 132 53 Z" fill="#ffccd5" />
+
+                <!-- Eyes (Cute open shiny eyes) -->
+                <circle cx="74" cy="92" r="12" fill="#1a1a1a" />
+                <circle cx="70" cy="87" r="4.2" fill="#ffffff" />
+                <circle cx="79" cy="97" r="1.8" fill="#ffffff" />
+                
+                <circle cx="126" cy="92" r="12" fill="#1a1a1a" />
+                <circle cx="122" cy="87" r="4.2" fill="#ffffff" />
+                <circle cx="131" cy="97" r="1.8" fill="#ffffff" />
+                
+                <!-- Eyebrows -->
+                <path d="M 68 76 Q 74 72 80 76" fill="none" stroke="#1a1a1a" stroke-width="2.5" />
+                <path d="M 120 76 Q 126 72 132 76" fill="none" stroke="#1a1a1a" stroke-width="2.5" />
+                
+                <!-- Mouth -->
+                <path class="cat-mouth" d="M 94 99 Q 97 103 100 100 Q 103 103 106 99" fill="none" stroke="#1a1a1a" stroke-width="3" />
+                <ellipse cx="54" cy="106" rx="7" ry="4" fill="#ffb4b9" opacity="0.6" />
+                <ellipse cx="130" cy="106" rx="7" ry="4" fill="#ffb4b9" opacity="0.6" />
+
+                <!-- Whiskers -->
+                <line x1="44" y1="92" x2="28" y2="92" stroke="#1a1a1a" stroke-width="3" />
+                <line x1="43" y1="98" x2="26" y2="102" stroke="#1a1a1a" stroke-width="3" />
+                <line x1="156" y1="92" x2="172" y2="92" stroke="#1a1a1a" stroke-width="3" />
+                <line x1="157" y1="98" x2="174" y2="102" stroke="#1a1a1a" stroke-width="3" />
+
+                <!-- Letter Envelope -->
+                <rect x="75" y="122" width="50" height="34" rx="3" fill="#ffffff" stroke="#1a1a1a" stroke-width="3" />
+                <path d="M 75 122 L 100 139 L 125 122" fill="none" stroke="#1a1a1a" stroke-width="3" />
+                <!-- Heart seal -->
+                <path d="M 100 134 A 3 3 0 0 1 106 134 Q 106 140 100 144 Q 94 140 94 134 A 3 3 0 0 1 100 134 Z" fill="#ff4d6d" />
+              </svg>
+            </div>
+            <h1 class="print-cover-title">Lời mời đi chơi 💌</h1>
+            <p class="print-cover-subtitle">Quét mã để chọn lịch trình nha!</p>
+            <div class="print-footer">Hẹn gặp bạn! 🐱</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Application script -->
+  <script src="script.js"></script>
+</body>
+</html>
