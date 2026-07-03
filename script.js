@@ -169,6 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Confetti helper
   function fireConfetti() {
+    if (typeof confetti === 'undefined') {
+      console.warn('Confetti library not loaded.');
+      return;
+    }
     const duration = 2 * 1000;
     const end = Date.now() + duration;
 
@@ -274,12 +278,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       successScreen.classList.add('active');
       // Fire celebration confetti again!
-      confetti({
-        particleCount: 150,
-        spread: 80,
-        origin: { y: 0.6 },
-        colors: ['#ff8fa3', '#ffb3c1', '#ffe5ec', '#ff758f', '#ff4d6d']
-      });
+      if (typeof confetti !== 'undefined') {
+        confetti({
+          particleCount: 150,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#ff8fa3', '#ffb3c1', '#ffe5ec', '#ff758f', '#ff4d6d']
+        });
+      }
     }, 300);
   });
 
@@ -368,6 +374,19 @@ document.addEventListener('DOMContentLoaded', () => {
       foreground: '#c9184a',
       level: 'H'
     };
+
+    if (typeof QRious === 'undefined') {
+      console.warn('QRious library is not loaded.');
+      const qrContainer = document.querySelector('.qr-container');
+      if (qrContainer) {
+        qrContainer.innerHTML = '<span style="font-size:10px;color:red;text-align:center;display:block;padding:10px;">Lỗi tải thư viện QR (Yêu cầu mạng)</span>';
+      }
+      const printQrWrapper = document.querySelector('.print-qr-wrapper');
+      if (printQrWrapper) {
+        printQrWrapper.innerHTML = '<span style="font-size:12px;color:red;display:block;padding:10px;">Lỗi tải thư viện QR (Yêu cầu mạng)</span>';
+      }
+      return;
+    }
 
     if (!qrPreview) {
       qrPreview = new QRious({
