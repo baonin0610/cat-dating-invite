@@ -432,9 +432,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Switch screen
       if (successScreen) successScreen.classList.remove('active');
-      if (videoScreen) videoScreen.classList.remove('active');
+      if (introScreen) introScreen.classList.remove('active');
       setTimeout(() => {
-        if (introScreen) introScreen.classList.add('active');
+        if (videoScreen) {
+          videoScreen.classList.add('active');
+          const birthdayVideo = document.getElementById('birthday-video');
+          if (birthdayVideo) {
+            try {
+              birthdayVideo.currentTime = 0;
+              birthdayVideo.play();
+            } catch (playErr) {
+              console.warn('Video replay failed:', playErr);
+            }
+          }
+        }
       }, 300);
     });
   }
