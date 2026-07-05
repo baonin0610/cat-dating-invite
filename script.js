@@ -70,6 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         birthdayOverlay.classList.remove('active');
         birthdayOverlay.style.opacity = '1';
+        
+        // Autoplay the birthday video when overlay closes
+        const birthdayVideo = document.getElementById('birthday-video');
+        if (birthdayVideo) {
+          try {
+            birthdayVideo.play();
+          } catch (playErr) {
+            console.warn('Video autoplay failed:', playErr);
+          }
+        }
       }, 500);
     });
   }
@@ -204,20 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        // Fade screens to Video Screen first
+        // Fade screens to Planner Screen
         if (introScreen) introScreen.classList.remove('active');
         setTimeout(() => {
-          if (videoScreen) videoScreen.classList.add('active');
-          
-          // Autoplay video since it's triggered by user interaction
-          const birthdayVideo = document.getElementById('birthday-video');
-          if (birthdayVideo) {
-            try {
-              birthdayVideo.play();
-            } catch (playErr) {
-              console.warn('Autoplay blocked or failed:', playErr);
-            }
-          }
+          if (plannerScreen) plannerScreen.classList.add('active');
         }, 300);
       } catch (err) {
         console.error('Screen transition failed:', err);
@@ -613,7 +613,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (videoScreen) videoScreen.classList.remove('active');
       setTimeout(() => {
-        if (plannerScreen) plannerScreen.classList.add('active');
+        if (introScreen) introScreen.classList.add('active');
       }, 300);
     });
   }
