@@ -216,6 +216,13 @@ header {
   overflow: visible;
 }
 
+.cat-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 /* Cat Animations */
 /* Sleepy Cat (Intro) */
 .cat-tail {
@@ -1083,7 +1090,7 @@ header {
     margin-bottom: 10px;
   }
 
-  .cat-svg {
+  .cat-svg, .cat-img {
     max-height: 110px;
   }
 
