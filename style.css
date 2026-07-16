@@ -169,7 +169,7 @@ header {
 /* Video Screen Styles */
 .video-container {
   width: 100%;
-  max-width: 320px;
+  max-width: 350px;
   aspect-ratio: 9/16;
   border-radius: 20px;
   overflow: hidden;
@@ -1137,7 +1137,7 @@ header {
   }
 
   .video-container {
-    max-width: 280px !important;
+    max-width: 310px !important;
     margin: 10px auto !important;
   }
   
